@@ -15,7 +15,7 @@ while true; do
    if [ ${REPLY} == "Y" ]; then
       pID=$(ps -ef | grep smartcashd | awk '{print $2}')
       kill ${pID}
-      rm -r ~/.smartcash/
+      rm -rf ~/.smartcash/
       break
    else
       if [ ${REPLY} == "n" ]; then
