@@ -95,7 +95,7 @@ wget https://raw.githubusercontent.com/SmartCash/smartnode/master/clearlog.sh
 
 # Create a cronjob for making sure smartcashd is always running
 if ! crontab -l | grep "~/smartnode/makerun.sh"; then
-  (crontab -l ; echo "*/1 * * * * ~/smartnode/makerun.sh") | crontab -
+  (crontab -l ; echo "*/5 * * * * ~/smartnode/makerun.sh") | crontab -
 fi
 
 # Create a cronjob for making sure the daemon is never stuck
