@@ -93,6 +93,11 @@ wget https://raw.githubusercontent.com/SmartCash/smartnode/master/checkdaemon.sh
 wget https://raw.githubusercontent.com/SmartCash/smartnode/master/upgrade.sh
 wget https://raw.githubusercontent.com/SmartCash/smartnode/master/clearlog.sh
 
+# Create a cronjob for making sure smartcashd runs after reboot
+if ! crontab -l | grep "@reboot smartcashd"; then
+  (crontab -l ; echo "@reboot smartcashd") | crontab -
+fi
+
 # Create a cronjob for making sure smartcashd is always running
 if ! crontab -l | grep "~/smartnode/makerun.sh"; then
   (crontab -l ; echo "*/5 * * * * ~/smartnode/makerun.sh") | crontab -
