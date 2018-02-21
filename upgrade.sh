@@ -6,7 +6,7 @@
 
 if apt list --upgradable | grep -v grep | grep smartcashd > /dev/null
 then
-  smartcash-cli stop && sleep 20 && apt update && apt install smartcashd -y && sleep 20 && smartcashd
+  smartcash-cli stop && sleep 10 && apt update && apt install smartcashd -y && smartcash-cli stop && sleep 10 && smartcashd
 else
   exit
 fi
