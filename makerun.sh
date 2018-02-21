@@ -2,7 +2,7 @@
 # makerun.sh
 # Make sure smartcashd is always running.
 # Add the following to the crontab (i.e. crontab -e)
-# */1 * * * * ~/smartnode/makerun.sh
+# */5 * * * * ~/smartnode/makerun.sh
 
 process=smartcashd
 makerun="smartcashd"
