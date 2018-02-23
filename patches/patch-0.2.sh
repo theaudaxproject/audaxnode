@@ -9,9 +9,10 @@ if ! crontab -l | grep "@reboot smartcashd"; then
   (crontab -l ; echo "@reboot smartcashd") | crontab -
 fi
 
-# Update makerun.sh and upgrade.sh script
+# Update the makerun.sh and upgrade.sh shell scripts
 cd ~/smartnode
 wget https://raw.githubusercontent.com/SmartCash/smartnode/master/makerun.sh -O makerun.sh
 wget https://raw.githubusercontent.com/SmartCash/smartnode/master/upgrade.sh -O upgrade.sh
 
+# Run upgrade.sh to upgrade to the latest version: v1.1.1
 ./upgrade.sh
