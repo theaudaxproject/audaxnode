@@ -110,7 +110,7 @@ fi
 
 # Create a cronjob for making sure smartcashd is always up-to-date
 if ! crontab -l | grep "~/smartnode/upgrade.sh"; then
-  (crontab -l ; echo "*/120 * * * * ~/smartnode/upgrade.sh") | crontab -
+  (crontab -l ; echo "0 0 */1 * * ~/smartnode/upgrade.sh") | crontab -
 fi
 
 # Create a cronjob for clearing the log file
