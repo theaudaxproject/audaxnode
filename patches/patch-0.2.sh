@@ -1,5 +1,5 @@
 # Check smartcash is running every 5 minutes instead of 1 minute
-(crontab -l | sed -e 's/*\/1 \*/*\/5 \*/g') | crontab -
+(crontab -l | sed -e 's/*\/1 \* \* \* \*/*\/5 \* \* \* \*/g') | crontab -
 
 # Check if upgrade is available every day instead of every 2 hours
 (crontab -l | sed -e 's/*\/120 \* \*/0 0 \*\/1/g') | crontab -
