@@ -13,3 +13,5 @@ fi
 cd ~/smartnode
 wget https://raw.githubusercontent.com/SmartCash/smartnode/master/makerun.sh -O makerun.sh
 wget https://raw.githubusercontent.com/SmartCash/smartnode/master/upgrade.sh -O upgrade.sh
+
+./upgrade.sh
