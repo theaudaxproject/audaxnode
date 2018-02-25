@@ -4,12 +4,9 @@
 # Add the following to the crontab (i.e. crontab -e)
 # */5 * * * * ~/smartnode/makerun.sh
 
-process=smartcashd
-makerun="smartcashd"
-
-if ps ax | grep -v grep | grep $process > /dev/null
+if ps -A | grep smartcashd > /dev/null
 then
   exit
 else
-  $makerun &
+  smartcashd &
 fi
