@@ -5,7 +5,7 @@ rm anti-ddos.sh
 
 # New security measures using ufw
 _sshPortNumber=$(grep "^[#]\{0,1\}[ ]\{0,1\}Port [0-9]\{2,\}" /etc/ssh/sshd_config | awk '{print $2}')
-apt install ufw
+apt install ufw -y
 ufw disable
 ufw allow 9678
 ufw allow "$_sshPortNumber"/tcp
