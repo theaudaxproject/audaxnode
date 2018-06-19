@@ -71,6 +71,9 @@ externalip=${_nodeIpAddress}
 bind=${_nodeIpAddress}
 masternodeaddr=${_nodeIpAddress}
 masternodeprivkey=${_nodePrivateKey}
+addnode=34.219.70.72
+addnode=54.213.40.80
+addnode=96.8.174.214
 " > helium.conf
 cd
 
