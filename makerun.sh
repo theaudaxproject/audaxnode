@@ -1,12 +1,12 @@
 #!/bin/bash
 # makerun.sh
-# Make sure smartcashd is always running.
+# Make sure heliumd is always running.
 # Add the following to the crontab (i.e. crontab -e)
-# */5 * * * * ~/smartnode/makerun.sh
+# */5 * * * * ~/heliumnode/makerun.sh
 
-if ps -A | grep smartcashd > /dev/null
+if ps -A | grep heliumd > /dev/null
 then
   exit
 else
-  smartcashd &
+  heliumd -daemon &
 fi
