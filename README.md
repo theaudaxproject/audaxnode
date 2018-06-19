@@ -1,4 +1,4 @@
-# SmartNode
+# Helium Masternode
 ### Bash installer for smartnode on Ubuntu 16.04 LTS x64
 
 #### This shell script comes with 4 cronjobs: 
