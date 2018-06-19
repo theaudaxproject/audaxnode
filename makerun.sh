@@ -8,5 +8,6 @@ if ps -A | grep heliumd > /dev/null
 then
   exit
 else
-  heliumd -daemon &
+ cd ~/helium/src;
+ ./heliumd -daemon &
 fi
