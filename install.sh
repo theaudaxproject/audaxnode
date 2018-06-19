@@ -99,7 +99,6 @@ cd ~/heliumnode/
 # Download the appropriate scripts
 wget https://raw.githubusercontent.com/cryptotronxyz/heliumnode/master/makerun.sh
 wget https://raw.githubusercontent.com/cryptotronxyz/heliumnode/master/checkdaemon.sh
-wget https://raw.githubusercontent.com/cryptotronxyz/heliumnode/master/upgrade.sh
 wget https://raw.githubusercontent.com/cryptotronxyz/heliumnode/master/clearlog.sh
 
 # Create a cronjob for making sure heliumd runs after reboot
@@ -117,11 +116,6 @@ if ! crontab -l | grep "~/heliumnode/checkdaemon.sh"; then
   (crontab -l ; echo "*/30 * * * * ~/heliumnode/checkdaemon.sh") | crontab -
 fi
 
-# Create a cronjob for making sure heliumd is always up-to-date
-if ! crontab -l | grep "~/heliumnode/upgrade.sh"; then
-  (crontab -l ; echo "0 0 */1 * * ~/heliumnode/upgrade.sh") | crontab -
-fi
-
 # Create a cronjob for clearing the log file
 if ! crontab -l | grep "~/heliumnode/clearlog.sh"; then
   (crontab -l ; echo "0 0 */2 * * ~/heliumnode/clearlog.sh") | crontab -
@@ -130,7 +124,6 @@ fi
 # Give execute permission to the cron scripts
 chmod 0700 ./makerun.sh
 chmod 0700 ./checkdaemon.sh
-chmod 0700 ./upgrade.sh
 chmod 0700 ./clearlog.sh
 
 # Change the SSH port
