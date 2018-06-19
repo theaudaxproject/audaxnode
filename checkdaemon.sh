@@ -2,15 +2,15 @@
 # checkdaemon.sh
 # Make sure the daemon is not stuck.
 # Add the following to the crontab (i.e. crontab -e)
-# */30 * * * * ~/smartnode/checkdaemon.sh
+# */30 * * * * ~/heliumnode/checkdaemon.sh
 
-previousBlock=$(cat ~/smartnode/blockcount)
-currentBlock=$(smartcash-cli getblockcount)
+previousBlock=$(cat ~/heliumnode/blockcount)
+currentBlock=$(helium-cli getblockcount)
 
-smartcash-cli getblockcount > ~/smartnode/blockcount
+helium-cli getblockcount > ~/heliumnode/blockcount
 
 if [ "$previousBlock" == "$currentBlock" ]; then
-  smartcash-cli stop
+  helium-cli stop
   sleep 10
-  smartcashd
+  heliumd
 fi
