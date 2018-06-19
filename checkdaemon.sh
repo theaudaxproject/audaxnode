@@ -12,5 +12,5 @@ helium-cli getblockcount > ~/heliumnode/blockcount
 if [ "$previousBlock" == "$currentBlock" ]; then
   helium-cli stop
   sleep 10
-  heliumd
+  heliumd -daemon
 fi
