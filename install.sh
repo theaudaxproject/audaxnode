@@ -78,6 +78,7 @@ addnode=96.8.174.214
 cd
 
 # Install heliumd
+set -e
 git clone https://github.com/gjhiggins/diproton
 mv diproton helium
 cd helium
