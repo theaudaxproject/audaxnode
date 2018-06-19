@@ -1,7 +1,6 @@
 #!/bin/bash
 # install.sh
-# Installs smartnode on Ubuntu 16.04 LTS x64
-# ATTENTION: The anti-ddos part will disable http, https and dns ports.
+# Installs helium on Ubuntu 16.04 LTS x64
 
 if [ "$(whoami)" != "root" ]; then
   echo "Script must be run as user: root"
@@ -9,13 +8,13 @@ if [ "$(whoami)" != "root" ]; then
 fi
 
 while true; do
- if [ -d ~/.smartcash ]; then
-   printf "~/.smartcash/ already exists! The installer will delete this folder. Continue anyway?(Y/n)"
+ if [ -d ~/.helium ]; then
+   printf "~/.helium/ already exists! The installer will delete this folder. Continue anyway?(Y/n)"
    read REPLY
    if [ ${REPLY} == "Y" ]; then
-      pID=$(ps -ef | grep smartcashd | awk '{print $2}')
+      pID=$(ps -ef | grep heliumd | awk '{print $2}')
       kill ${pID}
-      rm -rf ~/.smartcash/
+      rm -rf ~/.helium/
       break
    else
       if [ ${REPLY} == "n" ]; then
@@ -38,8 +37,8 @@ printf "Custom SSH Port(Enter to ignore): "
 read VARIABLE
 _sshPortNumber=${VARIABLE:-22}
 
-# Get a new privatekey by going to console >> debug and typing smartnode genkey
-printf "SmartNode GenKey: "
+# Get a new privatekey by going to console >> debug and typing helium genkey
+printf "Helium Masternode GenKey: "
 read _nodePrivateKey
 
 # The RPC node will only accept connections from your localhost
@@ -48,17 +47,17 @@ _rpcUserName=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 12 ; echo '')
 # Choose a random and secure password for the RPC
 _rpcPassword=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 32 ; echo '')
 
-# Get the IP address of your vps which will be hosting the smartnode
+# Get the IP address of your vps which will be hosting the helium
 _nodeIpAddress=$(ip route get 1 | awk '{print $NF;exit}')
 
-# Make a new directory for smartcash daemon
-mkdir ~/.smartcash/
-touch ~/.smartcash/smartcash.conf
+# Make a new directory for helium daemon
+mkdir ~/.helium/
+touch ~/.helium/helium.conf
 
-# Change the directory to ~/.smartcash
-cd ~/.smartcash/
+# Change the directory to ~/.helium
+cd ~/.helium/
 
-# Create the initial smartcash.conf file
+# Create the initial helium.conf file
 echo "rpcuser=${_rpcUserName}
 rpcpassword=${_rpcPassword}
 rpcallowip=127.0.0.1
@@ -67,54 +66,65 @@ server=1
 daemon=1
 logtimestamps=1
 maxconnections=64
-txindex=1
-smartnode=1
-externalip=${_nodeIpAddress}:9678
-smartnodeprivkey=${_nodePrivateKey}
-" > smartcash.conf
+masternode=1
+externalip=${_nodeIpAddress}
+bind=${_nodeIpAddress}
+masternodeaddr=${_nodeIpAddress}
+masternodeprivkey=${_nodePrivateKey}
+" > helium.conf
 cd
 
-# Install smartcashd using apt-get
+# Install heliumd
+git clone https://github.com/gjhiggins/diproton
+mv diproton helium
+cd helium/
+add-apt-repository ppa:bitcoin/bitcoin -y
 apt-get update -y
-apt-get install software-properties-common -y
-add-apt-repository ppa:smartcash/ppa -y && apt update -y && apt install smartcashd -y && smartcashd
+apt-get install build-essential libtool autotools-dev autoconf pkg-config libssl-dev libevent-dev libboost-all-dev  libprotobuf-dev protobuf-compiler  libdb4.8-dev libdb4.8++-dev -y
+./autogen.sh
+./configure  --disable-tests
+make
+make install
+cd src
+./heliumd -daemon
+cd
 
-# Create a directory for smartnode's cronjobs and the anti-ddos script
-rm -r smartnode
-mkdir smartnode
+# Create a directory for helium's cronjobs
+rm -r heliumnode
+mkdir heliumnode
 
-# Change the directory to ~/smartnode/
-cd ~/smartnode/
+# Change the directory to ~/heliumnode/
+cd ~/heliumnode/
 
 # Download the appropriate scripts
-wget https://raw.githubusercontent.com/SmartCash/smartnode/master/makerun.sh
-wget https://raw.githubusercontent.com/SmartCash/smartnode/master/checkdaemon.sh
-wget https://raw.githubusercontent.com/SmartCash/smartnode/master/upgrade.sh
-wget https://raw.githubusercontent.com/SmartCash/smartnode/master/clearlog.sh
+wget https://raw.githubusercontent.com/cryptotronxyz/heliumnode/master/makerun.sh
+wget https://raw.githubusercontent.com/cryptotronxyz/heliumnode/master/checkdaemon.sh
+wget https://raw.githubusercontent.com/cryptotronxyz/heliumnode/master/upgrade.sh
+wget https://raw.githubusercontent.com/cryptotronxyz/heliumnode/master/clearlog.sh
 
-# Create a cronjob for making sure smartcashd runs after reboot
-if ! crontab -l | grep "@reboot smartcashd"; then
-  (crontab -l ; echo "@reboot smartcashd") | crontab -
+# Create a cronjob for making sure heliumd runs after reboot
+if ! crontab -l | grep "@reboot heliumd"; then
+  (crontab -l ; echo "@reboot heliumd") | crontab -
 fi
 
-# Create a cronjob for making sure smartcashd is always running
-if ! crontab -l | grep "~/smartnode/makerun.sh"; then
-  (crontab -l ; echo "*/5 * * * * ~/smartnode/makerun.sh") | crontab -
+# Create a cronjob for making sure heliumd is always running
+if ! crontab -l | grep "~/heliumnode/makerun.sh"; then
+  (crontab -l ; echo "*/5 * * * * ~/heliumnode/makerun.sh") | crontab -
 fi
 
 # Create a cronjob for making sure the daemon is never stuck
-if ! crontab -l | grep "~/smartnode/checkdaemon.sh"; then
-  (crontab -l ; echo "*/30 * * * * ~/smartnode/checkdaemon.sh") | crontab -
+if ! crontab -l | grep "~/heliumnode/checkdaemon.sh"; then
+  (crontab -l ; echo "*/30 * * * * ~/heliumnode/checkdaemon.sh") | crontab -
 fi
 
-# Create a cronjob for making sure smartcashd is always up-to-date
-if ! crontab -l | grep "~/smartnode/upgrade.sh"; then
-  (crontab -l ; echo "0 0 */1 * * ~/smartnode/upgrade.sh") | crontab -
+# Create a cronjob for making sure heliumd is always up-to-date
+if ! crontab -l | grep "~/heliumnode/upgrade.sh"; then
+  (crontab -l ; echo "0 0 */1 * * ~/heliumnode/upgrade.sh") | crontab -
 fi
 
 # Create a cronjob for clearing the log file
-if ! crontab -l | grep "~/smartnode/clearlog.sh"; then
-  (crontab -l ; echo "0 0 */2 * * ~/smartnode/clearlog.sh") | crontab -
+if ! crontab -l | grep "~/heliumnode/clearlog.sh"; then
+  (crontab -l ; echo "0 0 */2 * * ~/heliumnode/clearlog.sh") | crontab -
 fi
 
 # Give execute permission to the cron scripts
@@ -129,7 +139,7 @@ sed -i "s/[#]\{0,1\}[ ]\{0,1\}Port [0-9]\{2,\}/Port ${_sshPortNumber}/g" /etc/ss
 # Firewall security measures
 apt install ufw -y
 ufw disable
-ufw allow 9678
+ufw allow 9009
 ufw allow "$_sshPortNumber"/tcp
 ufw limit "$_sshPortNumber"/tcp
 ufw logging on
