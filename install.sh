@@ -77,7 +77,8 @@ cd
 # Install heliumd
 git clone https://github.com/gjhiggins/diproton
 mv diproton helium
-cd helium/
+cd helium
+pwd
 add-apt-repository ppa:bitcoin/bitcoin -y
 apt-get update -y
 apt-get install build-essential libtool autotools-dev autoconf pkg-config libssl-dev libevent-dev libboost-all-dev  libprotobuf-dev protobuf-compiler  libdb4.8-dev libdb4.8++-dev -y
