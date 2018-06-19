@@ -102,8 +102,8 @@ wget https://raw.githubusercontent.com/cryptotronxyz/heliumnode/master/checkdaem
 wget https://raw.githubusercontent.com/cryptotronxyz/heliumnode/master/clearlog.sh
 
 # Create a cronjob for making sure heliumd runs after reboot
-if ! crontab -l | grep "@reboot heliumd"; then
-  (crontab -l ; echo "@reboot heliumd") | crontab -
+if ! crontab -l | grep "@reboot ~/helium/src/heliumd -daemon"; then
+  (crontab -l ; echo "@reboot ~/helium/src/heliumd -daemon") | crontab -
 fi
 
 # Create a cronjob for making sure heliumd is always running
