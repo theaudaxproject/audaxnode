@@ -82,7 +82,7 @@ set -e
 git clone https://github.com/gjhiggins/diproton
 mv diproton helium
 cd helium
-apt-get install automake
+apt-get install automake -y
 add-apt-repository ppa:bitcoin/bitcoin -y
 apt-get update -y
 apt-get install build-essential libtool autotools-dev autoconf pkg-config libssl-dev libevent-dev libboost-all-dev  libprotobuf-dev protobuf-compiler  libdb4.8-dev libdb4.8++-dev -y
@@ -95,7 +95,9 @@ cd src
 cd
 
 # Create a directory for helium's cronjobs
-rm -r heliumnode
+if [ -d ~/heliumnode ]; then
+    rm -r ~/heliumnode
+fi
 mkdir heliumnode
 
 # Change the directory to ~/heliumnode/
