@@ -88,7 +88,9 @@ cd src
 cd
 
 # Create a directory for helium's cronjobs
-rm -r heliumnode
+if [ -d ~/heliumnode ]; then
+    rm -r ~/heliumnode
+fi
 mkdir heliumnode
 
 # Change the directory to ~/heliumnode/
