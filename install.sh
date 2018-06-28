@@ -78,16 +78,13 @@ externalip=${_nodeIpAddress}
 bind=${_nodeIpAddress}
 masternodeaddr=${_nodeIpAddress}
 masternodeprivkey=${_nodePrivateKey}
-addnode=34.219.70.72
-addnode=54.213.40.80
-addnode=96.8.174.214
+addnode=minkiz.co
 " > helium.conf
 cd
 
 # Install heliumd
 set -e
 git clone https://github.com/heliumchain/helium
-mv diproton helium
 cd helium
 apt-get install automake -y
 add-apt-repository ppa:bitcoin/bitcoin -y
