@@ -1,6 +1,6 @@
 #!/bin/bash
 # install.sh
-# Installs helium on Ubuntu 16.04 LTS x64
+# Installs Helium masternode on Ubuntu 16.04 LTS x64
 
 if [ "$(whoami)" != "root" ]; then
   echo "Script must be run as user: root"
