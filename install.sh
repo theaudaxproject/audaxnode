@@ -12,10 +12,19 @@ while true; do
    printf "~/.helium/ already exists! The installer will delete this folder. Continue anyway?(Y/n)"
    read REPLY
    if [ ${REPLY} == "Y" ]; then
-      pID=$(ps -ef | grep heliumd | awk '{print $2}')
-      kill ${pID}      
-      rm -rf ~/.helium/
-      break
+      pID=$(pidof heliumd)
+      if [ ${pID} ]; then
+          kill ${pID}      
+          rm -rf ~/.helium/
+          if [ -d ~/helium ]; then
+              rm -rf ~/helium/
+          else
+              echo ""
+          fi    
+          break
+      else
+          echo "No instance of helium running"
+      fi  
    else
       if [ ${REPLY} == "n" ]; then
         exit
