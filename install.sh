@@ -86,7 +86,7 @@ cd
 
 # Install heliumd
 set -e
-git clone https://github.com/gjhiggins/diproton
+git clone https://github.com/heliumchain/helium
 mv diproton helium
 cd helium
 apt-get install automake -y
