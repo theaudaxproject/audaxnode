@@ -59,6 +59,9 @@ _rpcPassword=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 32 ; echo '')
 # Get the IP address of your vps which will be hosting the helium
 _nodeIpAddress=$(ip route get 1 | awk '{print $NF;exit}')
 
+# Set the connection port
+_p2pport=':9009'
+
 # Check for swap file - if none, create one
 if free | awk '/^Swap:/ {exit !$2}'; then
     echo ""
@@ -85,7 +88,7 @@ maxconnections=64
 masternode=1
 externalip=${_nodeIpAddress}
 bind=${_nodeIpAddress}
-masternodeaddr=${_nodeIpAddress}
+masternodeaddr=${_nodeIpAddress}${_p2pport}
 masternodeprivkey=${_nodePrivateKey}
 addnode=minkiz.co
 " > helium.conf
@@ -95,6 +98,7 @@ cd
 set -e
 git clone https://github.com/heliumchain/helium
 cd helium
+apt-get update -y && apt-get upgrade -y
 apt-get install automake -y
 add-apt-repository ppa:bitcoin/bitcoin -y
 apt-get update -y
