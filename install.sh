@@ -90,7 +90,6 @@ externalip=${_nodeIpAddress}
 bind=${_nodeIpAddress}
 masternodeaddr=${_nodeIpAddress}${_p2pport}
 masternodeprivkey=${_nodePrivateKey}
-addnode=minkiz.co
 " > helium.conf
 cd
 
