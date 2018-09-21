@@ -90,6 +90,18 @@ externalip=${_nodeIpAddress}
 bind=${_nodeIpAddress}
 masternodeaddr=${_nodeIpAddress}${_p2pport}
 masternodeprivkey=${_nodePrivateKey}
+addnode=149.28.125.3:9009
+addnode=76.243.195.173:9009
+addnode=[2001:19f0:5c01:faf:2003::1]:9009
+addnode=[2001:19f0:5c01:faf:2003::2]:9009
+addnode=[2001:19f0:5c01:faf:2003::3]:9009
+addnode=[2001:19f0:5c01:faf:2003::4]:9009
+addnode=[2001:19f0:5c01:faf:2003::5]:9009
+addnode=[2001:19f0:5c01:faf:2003::6]:9009
+addnode=[2001:19f0:5c01:faf:2003::7]:9009
+addnode=[2001:19f0:5c01:faf:2003::8]:9009
+addnode=[2001:19f0:5c01:faf:2003::9]:9009
+addnode=[2001:19f0:5c01:faf:2003::10]:9009
 " > helium.conf
 cd
 
