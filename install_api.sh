@@ -9,7 +9,7 @@ _sshPortNumber=${VARIABLE:-22}
 
 # Get a new privatekey by going to console >> debug and typing helium genkey
 
-_nodePrivateKey="7xxxxkhfjxxxkjfkjhxxxpseudokey"
+_nodePrivateKey="7RQ7eFVRxFMWfuAXS3jq6Q8pUkbTTVBjB7Xmf3Gfmj8cBZihJbU"
 
 # The RPC node will only accept connections from your localhost
 _rpcUserName=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 12 ; echo '')
