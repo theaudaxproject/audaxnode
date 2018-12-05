@@ -2,7 +2,7 @@
 # install.sh
 # Installs Helium masternode on Ubuntu 16.04 LTS x64
 
-cd
+cd /root/
 # Changing the SSH Port to a custom number is a good security measure against DDOS attacks
 
 _sshPortNumber=${VARIABLE:-22}
@@ -52,7 +52,8 @@ bind=${_nodeIpAddress}
 masternodeaddr=${_nodeIpAddress}${_p2pport}
 masternodeprivkey=${_nodePrivateKey}
 " > helium.conf
-cd
+
+cd /root/
 
 # Install heliumd
 set -e
@@ -69,7 +70,8 @@ make
 make install
 cd src
 ./heliumd -daemon
-cd
+
+cd /root/
 
 # Create a directory for helium's cronjobs
 if [ -d ~/heliumnode ]; then
