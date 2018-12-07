@@ -4,7 +4,7 @@
 
 cd /root/
 
-# retrieve name for config file woch should ave been dropped on server via API. Will be used for status feedback
+# retrieve name for config file which should have been dropped on server via API. Will be used for status feedback
 hname=$(<vpshostname.info)
 
 #send status. Wil do this often. better to categorize tasks into maybe 5-6 , and send status for each instead of for every command run
