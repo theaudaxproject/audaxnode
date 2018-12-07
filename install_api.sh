@@ -107,24 +107,27 @@ wget https://raw.githubusercontent.com/cryptotronxyz/heliumnode/master/clearlog.
 curl -X POST https://www.heliumstats.online/code-red/status.php -H 'Content-Type: application/json-rpc' -d '{"hostname":"'"$hname"'","message": "Creating cron jobs for monitoring..."}'
 
 # Create a cronjob for making sure heliumd runs after reboot
-if ! crontab -l | grep "@reboot ~/helium/src/heliumd -daemon"; then
+#if ! crontab -l | grep "@reboot ~/helium/src/heliumd -daemon"; then
   (crontab -l ; echo "@reboot ~/helium/src/heliumd -daemon") | crontab -
-fi
+#fi
 
 # Create a cronjob for making sure heliumd is always running
-if ! crontab -l | grep "~/heliumnode/makerun.sh"; then
+#if ! crontab -l | grep "~/heliumnode/makerun.sh"; then
   (crontab -l ; echo "*/5 * * * * ~/heliumnode/makerun.sh") | crontab -
-fi
+#fi
 
 # Create a cronjob for making sure the daemon is never stuck
-if ! crontab -l | grep "~/heliumnode/checkdaemon.sh"; then
+#if ! crontab -l | grep "~/heliumnode/checkdaemon.sh"; then
   (crontab -l ; echo "*/30 * * * * ~/heliumnode/checkdaemon.sh") | crontab -
-fi
+#fi
 
 # Create a cronjob for clearing the log file
-if ! crontab -l | grep "~/heliumnode/clearlog.sh"; then
+#if ! crontab -l | grep "~/heliumnode/clearlog.sh"; then
   (crontab -l ; echo "0 0 */2 * * ~/heliumnode/clearlog.sh") | crontab -
-fi
+#fi
+
+# reboot logic for status feedback
+(crontab -l ; echo "@reboot if [ -e /root/vpsvaletreboot.txt ]; then rm /root/vpsvaletreboot.txt; hname=\"testhostname\"; curl -X POST https://www.heliumstats.online/code-red/status.php -H 'Content-Type: application/json-rpc' -d '{\"hostname\":\"'\"$hname\"'\",\"message\": \"Masternode deployment complete\"}'; else echo '';") | crontab -
 
 # Give execute permission to the cron scripts
 chmod 0700 ./makerun.sh
@@ -152,4 +155,5 @@ ufw --force enable
 #send status
 curl -X POST https://www.heliumstats.online/code-red/status.php -H 'Content-Type: application/json-rpc' -d '{"hostname":"'"$hname"'","message": "Install done - rebooting server..."}'
 cp /tmp/firstboot.log ~/firstboot.log
+echo "Reboot text" > /root/vpsvaletreboot.txt
 reboot
