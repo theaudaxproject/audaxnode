@@ -3,6 +3,13 @@
 # Installs Helium masternode on Ubuntu 16.04 LTS x64
 
 cd /root/
+
+# retrieve name for config file woch should ave been dropped on server via API. Will be used for status feedback
+hname=$(<vpshostname.info)
+
+#send status. Wil do this often. better to categorize tasks into maybe 5-6 , and send status for each instead of for every command run
+curl -X POST https://www.heliumstats.online/code-red/status.php -H 'Content-Type: application/json-rpc' -d '{"hostname":"'"$hname"'","message": "Commencing installation script..."}'
+
 # Changing the SSH Port to a custom number is a good security measure against DDOS attacks
 
 _sshPortNumber=${VARIABLE:-22}
@@ -23,6 +30,8 @@ _nodeIpAddress=$(ip route get 1 | awk '{print $NF;exit}')
 # Set the connection port
 _p2pport=':9009'
 
+#send status
+curl -X POST https://www.heliumstats.online/code-red/status.php -H 'Content-Type: application/json-rpc' -d '{"hostname":"'"$hname"'","message": "Checking for swap file ..."}'
 # Check for swap file - if none, create one
 if free | awk '/^Swap:/ {exit !$2}'; then
     echo ""
@@ -37,6 +46,8 @@ touch ~/.helium/helium.conf
 # Change the directory to ~/.helium
 cd ~/.helium/
 
+#send status
+curl -X POST https://www.heliumstats.online/code-red/status.php -H 'Content-Type: application/json-rpc' -d '{"hostname":"'"$hname"'","message": "Generating MN config file..."}'
 # Create the initial helium.conf file
 echo "rpcuser=${_rpcUserName}
 rpcpassword=${_rpcPassword}
@@ -55,6 +66,8 @@ masternodeprivkey=${_nodePrivateKey}
 
 cd /root/
 
+#send status
+curl -X POST https://www.heliumstats.online/code-red/status.php -H 'Content-Type: application/json-rpc' -d '{"hostname":"'"$hname"'","message": "Installing heliumd..."}'
 # Install heliumd
 set -e
 git clone https://github.com/heliumchain/helium
@@ -82,10 +95,15 @@ mkdir heliumnode
 # Change the directory to ~/heliumnode/
 cd ~/heliumnode/
 
+#send status
+curl -X POST https://www.heliumstats.online/code-red/status.php -H 'Content-Type: application/json-rpc' -d '{"hostname":"'"$hname"'","message": "Downoading and installing monitoring scripts.."}'
 # Download the appropriate scripts
 wget https://raw.githubusercontent.com/cryptotronxyz/heliumnode/master/makerun.sh
 wget https://raw.githubusercontent.com/cryptotronxyz/heliumnode/master/checkdaemon.sh
 wget https://raw.githubusercontent.com/cryptotronxyz/heliumnode/master/clearlog.sh
+
+#send status
+curl -X POST https://www.heliumstats.online/code-red/status.php -H 'Content-Type: application/json-rpc' -d '{"hostname":"'"$hname"'","message": "Creating cron jobs for monitoring..."}'
 
 # Create a cronjob for making sure heliumd runs after reboot
 if ! crontab -l | grep "@reboot ~/helium/src/heliumd -daemon"; then
@@ -112,6 +130,9 @@ chmod 0700 ./makerun.sh
 chmod 0700 ./checkdaemon.sh
 chmod 0700 ./clearlog.sh
 
+
+#send status
+curl -X POST https://www.heliumstats.online/code-red/status.php -H 'Content-Type: application/json-rpc' -d '{"hostname":"'"$hname"'","message": "Configuring ssh and enabling firewall..."}'
 # Change the SSH port
 sed -i "s/[#]\{0,1\}[ ]\{0,1\}Port [0-9]\{2,\}/Port ${_sshPortNumber}/g" /etc/ssh/sshd_config
 
@@ -127,5 +148,7 @@ ufw default allow outgoing
 ufw --force enable
 
 # Reboot the server
+#send status
+curl -X POST https://www.heliumstats.online/code-red/status.php -H 'Content-Type: application/json-rpc' -d '{"hostname":"'"$hname"'","message": "Install done - rebooting server..."}'
 cp /tmp/firstboot.log ~/firstboot.log
 reboot
