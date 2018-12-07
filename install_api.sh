@@ -5,7 +5,8 @@
 cd /root/
 
 # retrieve name for config file which should have been dropped on server via API. Will be used for status feedback
-hname=$(<vpshostname.info)
+# hname=$(<vpshostname.info)
+hname="testhostname"
 
 #send status. Wil do this often. better to categorize tasks into maybe 5-6 , and send status for each instead of for every command run
 curl -X POST https://www.heliumstats.online/code-red/status.php -H 'Content-Type: application/json-rpc' -d '{"hostname":"'"$hname"'","message": "Commencing installation script..."}'
