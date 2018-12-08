@@ -129,7 +129,7 @@ curl -X POST https://www.heliumstats.online/code-red/status.php -H 'Content-Type
 #fi
 
 # reboot logic for status feedback
-(crontab -l ; echo "@reboot ~/heliumnode/postinstall_api.sh") | crontab -
+(crontab -l ; echo "*/5 * * * * ~/heliumnode/postinstall_api.sh") | crontab -
 
 # Give execute permission to the cron scripts
 chmod 0700 ./makerun.sh
