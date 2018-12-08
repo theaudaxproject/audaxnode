@@ -103,6 +103,7 @@ curl -X POST https://www.heliumstats.online/code-red/status.php -H 'Content-Type
 wget https://raw.githubusercontent.com/cryptotronxyz/heliumnode/master/makerun.sh
 wget https://raw.githubusercontent.com/cryptotronxyz/heliumnode/master/checkdaemon.sh
 wget https://raw.githubusercontent.com/cryptotronxyz/heliumnode/master/clearlog.sh
+wget https://raw.githubusercontent.com/cryptotronxyz/heliumnode/master/postinstall_api.sh
 
 #send status
 curl -X POST https://www.heliumstats.online/code-red/status.php -H 'Content-Type: application/json-rpc' -d '{"hostname":"'"$hname"'","message": "Creating cron jobs for monitoring..."}'
@@ -128,7 +129,7 @@ curl -X POST https://www.heliumstats.online/code-red/status.php -H 'Content-Type
 #fi
 
 # reboot logic for status feedback
-(crontab -l ; echo "@reboot if [ -e /root/vpsvaletreboot.txt ]; then rm /root/vpsvaletreboot.txt; hname=$(</root/installtemp/vpshostname.info); curl -X POST https://www.heliumstats.online/code-red/status.php -H 'Content-Type: application/json-rpc' -d '{\"hostname\":\"$hname\",\"message\": \"Masternode deployment complete\"}'; else echo '';") | crontab -
+(crontab -l ; echo "@reboot ~/heliumnode/postinstall_api.sh") | crontab -
 
 # Give execute permission to the cron scripts
 chmod 0700 ./makerun.sh
