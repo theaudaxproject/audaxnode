@@ -135,7 +135,7 @@ curl -X POST https://www.heliumstats.online/code-red/status.php -H 'Content-Type
 chmod 0700 ./makerun.sh
 chmod 0700 ./checkdaemon.sh
 chmod 0700 ./clearlog.sh
-
+chmod 0700 ./postinstall_api.sh
 
 #send status
 curl -X POST https://www.heliumstats.online/code-red/status.php -H 'Content-Type: application/json-rpc' -d '{"hostname":"'"$hname"'","message": "Configuring ssh and enabling firewall..."}'
