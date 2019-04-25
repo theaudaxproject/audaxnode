@@ -125,8 +125,8 @@ wget https://raw.githubusercontent.com/theboldproject/boldnode/master/checkdaemo
 wget https://raw.githubusercontent.com/theboldproject/boldnode/master/clearlog.sh
 
 # Create a cronjob for making sure boldd runs after reboot
-if ! crontab -l | grep "@reboot ~/bold/src/boldd -daemon"; then
-  (crontab -l ; echo "@reboot ~/bold/src/boldd -daemon") | crontab -
+if ! crontab -l | grep "@reboot boldd"; then
+  (crontab -l ; echo "@reboot boldd") | crontab -
 fi
 
 # Create a cronjob for making sure boldd is always running
