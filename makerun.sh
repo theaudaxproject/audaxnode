@@ -1,13 +1,13 @@
 #!/bin/bash
 # makerun.sh
-# Make sure heliumd is always running.
+# Make sure boldd is always running.
 # Add the following to the crontab (i.e. crontab -e)
-# */5 * * * * ~/heliumnode/makerun.sh
+# */5 * * * * ~/boldnode/makerun.sh
 
-if ps -A | grep heliumd > /dev/null
+if ps -A | grep boldd > /dev/null
 then
   exit
 else
- cd ~/helium/src;
- ./heliumd -daemon &
+ cd ~/bold/src;
+ ./boldd -daemon &
 fi

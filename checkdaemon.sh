@@ -2,16 +2,16 @@
 # checkdaemon.sh
 # Make sure the daemon is not stuck.
 # Add the following to the crontab (i.e. crontab -e)
-# */30 * * * * ~/heliumnode/checkdaemon.sh
+# */30 * * * * ~/boldnode/checkdaemon.sh
 
-previousBlock=$(cat ~/heliumnode/blockcount)
-currentBlock=$(helium-cli getblockcount)
+previousBlock=$(cat ~/boldnode/blockcount)
+currentBlock=$(bold-cli getblockcount)
 
-helium-cli getblockcount > ~/heliumnode/blockcount
+bold-cli getblockcount > ~/boldnode/blockcount
 
 if [ "$previousBlock" == "$currentBlock" ]; then
-  cd ~/helium/src;
-  ./helium-cli stop;
+  cd ~/bold/src;
+  ./bold-cli stop;
   sleep 10;
-  ./heliumd -daemon;
+  ./boldd -daemon;
 fi

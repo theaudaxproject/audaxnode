@@ -1,6 +1,6 @@
 #!/bin/bash
 # install.sh
-# Installs Helium masternode on Ubuntu 16.04 LTS x64
+# Installs Bold masternode on Ubuntu 16.04 LTS x64
 
 if [ "$(whoami)" != "root" ]; then
   echo "Script must be run as user: root"
@@ -8,22 +8,22 @@ if [ "$(whoami)" != "root" ]; then
 fi
 
 while true; do
- if [ -d ~/.helium ]; then
-   printf "~/.helium/ already exists! The installer will delete this folder. Continue anyway?(Y/n)"
+ if [ -d ~/.bold ]; then
+   printf "~/.bold/ already exists! The installer will delete this folder. Continue anyway?(Y/n)"
    read REPLY
    if [ ${REPLY} == "Y" ]; then
-      pID=$(pidof heliumd)
+      pID=$(pidof boldd)
       if [ ${pID} ]; then
           kill ${pID}      
-          rm -rf ~/.helium/
-          if [ -d ~/helium ]; then
-              rm -rf ~/helium/
+          rm -rf ~/.bold/
+          if [ -d ~/bold ]; then
+              rm -rf ~/bold/
           else
               echo ""
           fi    
           break
       else
-          echo "No instance of helium running"
+          echo "No instance of bold running"
       fi  
    else
       if [ ${REPLY} == "n" ]; then
@@ -46,8 +46,8 @@ printf "Custom SSH Port(Enter to ignore): "
 read VARIABLE
 _sshPortNumber=${VARIABLE:-22}
 
-# Get a new privatekey by going to console >> debug and typing helium genkey
-printf "Helium Masternode GenKey: "
+# Get a new privatekey by going to console >> debug and typing bold genkey
+printf "Bold Masternode GenKey: "
 read _nodePrivateKey
 
 # The RPC node will only accept connections from your localhost
@@ -56,27 +56,27 @@ _rpcUserName=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 12 ; echo '')
 # Choose a random and secure password for the RPC
 _rpcPassword=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 32 ; echo '')
 
-# Get the IP address of your vps which will be hosting the helium
+# Get the IP address of your vps which will be hosting the bold
 _nodeIpAddress=$(ip route get 1 | awk '{print $NF;exit}')
 
 # Set the connection port
-_p2pport=':9009'
+_p2pport=':18200'
 
 # Check for swap file - if none, create one
 if free | awk '/^Swap:/ {exit !$2}'; then
     echo ""
 else
-    fallocate -l 1G /swapfile && chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile && cp /etc/fstab /etc/fstab.bak && echo '/swapfile none swap sw 0 0' | tee -a /etc/fstab
+    fallocate -l 2G /swapfile && chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile && cp /etc/fstab /etc/fstab.bak && echo '/swapfile none swap sw 0 0' | tee -a /etc/fstab
 fi
 
-# Make a new directory for helium daemon
-mkdir ~/.helium/
-touch ~/.helium/helium.conf
+# Make a new directory for bold daemon
+mkdir ~/.bold/
+touch ~/.bold/bold.conf
 
-# Change the directory to ~/.helium
-cd ~/.helium/
+# Change the directory to ~/.bold
+cd ~/.bold/
 
-# Create the initial helium.conf file
+# Create the initial bold.conf file
 echo "rpcuser=${_rpcUserName}
 rpcpassword=${_rpcPassword}
 rpcallowip=127.0.0.1
@@ -90,58 +90,58 @@ externalip=${_nodeIpAddress}
 bind=${_nodeIpAddress}
 masternodeaddr=${_nodeIpAddress}${_p2pport}
 masternodeprivkey=${_nodePrivateKey}
-" > helium.conf
+" > bold.conf
 cd
 
-# Install heliumd
+# Install boldd
 set -e
-git clone https://github.com/heliumchain/helium
-cd helium
+git clone https://github.com/theboldproject/BOLD bold
+cd bold
 apt-get update -y && apt-get upgrade -y
 apt-get install automake -y
 add-apt-repository ppa:bitcoin/bitcoin -y
 apt-get update -y
 apt-get install build-essential libtool autotools-dev autoconf pkg-config libssl-dev libevent-dev libboost-all-dev  libprotobuf-dev protobuf-compiler  libdb4.8-dev libdb4.8++-dev -y
 ./autogen.sh
-./configure  --disable-tests
+./configure
 make
 make install
 cd src
-./heliumd -daemon
+./boldd -daemon
 cd
 
-# Create a directory for helium's cronjobs
-if [ -d ~/heliumnode ]; then
-    rm -r ~/heliumnode
+# Create a directory for bold's cronjobs
+if [ -d ~/boldnode ]; then
+    rm -r ~/boldnode
 fi
-mkdir heliumnode
+mkdir boldnode
 
-# Change the directory to ~/heliumnode/
-cd ~/heliumnode/
+# Change the directory to ~/boldnode/
+cd ~/boldnode/
 
 # Download the appropriate scripts
-wget https://raw.githubusercontent.com/cryptotronxyz/heliumnode/master/makerun.sh
-wget https://raw.githubusercontent.com/cryptotronxyz/heliumnode/master/checkdaemon.sh
-wget https://raw.githubusercontent.com/cryptotronxyz/heliumnode/master/clearlog.sh
+wget https://raw.githubusercontent.com/theboldproject/boldnode/master/makerun.sh
+wget https://raw.githubusercontent.com/theboldproject/boldnode/master/checkdaemon.sh
+wget https://raw.githubusercontent.com/theboldproject/boldnode/master/clearlog.sh
 
-# Create a cronjob for making sure heliumd runs after reboot
-if ! crontab -l | grep "@reboot ~/helium/src/heliumd -daemon"; then
-  (crontab -l ; echo "@reboot ~/helium/src/heliumd -daemon") | crontab -
+# Create a cronjob for making sure boldd runs after reboot
+if ! crontab -l | grep "@reboot ~/bold/src/boldd -daemon"; then
+  (crontab -l ; echo "@reboot ~/bold/src/boldd -daemon") | crontab -
 fi
 
-# Create a cronjob for making sure heliumd is always running
-if ! crontab -l | grep "~/heliumnode/makerun.sh"; then
-  (crontab -l ; echo "*/5 * * * * ~/heliumnode/makerun.sh") | crontab -
+# Create a cronjob for making sure boldd is always running
+if ! crontab -l | grep "~/boldnode/makerun.sh"; then
+  (crontab -l ; echo "*/5 * * * * ~/boldnode/makerun.sh") | crontab -
 fi
 
 # Create a cronjob for making sure the daemon is never stuck
-if ! crontab -l | grep "~/heliumnode/checkdaemon.sh"; then
-  (crontab -l ; echo "*/30 * * * * ~/heliumnode/checkdaemon.sh") | crontab -
+if ! crontab -l | grep "~/boldnode/checkdaemon.sh"; then
+  (crontab -l ; echo "*/30 * * * * ~/boldnode/checkdaemon.sh") | crontab -
 fi
 
 # Create a cronjob for clearing the log file
-if ! crontab -l | grep "~/heliumnode/clearlog.sh"; then
-  (crontab -l ; echo "0 0 */2 * * ~/heliumnode/clearlog.sh") | crontab -
+if ! crontab -l | grep "~/boldnode/clearlog.sh"; then
+  (crontab -l ; echo "0 0 */2 * * ~/boldnode/clearlog.sh") | crontab -
 fi
 
 # Give execute permission to the cron scripts
@@ -155,7 +155,7 @@ sed -i "s/[#]\{0,1\}[ ]\{0,1\}Port [0-9]\{2,\}/Port ${_sshPortNumber}/g" /etc/ss
 # Firewall security measures
 apt install ufw -y
 ufw disable
-ufw allow 9009
+ufw allow 18200
 ufw allow "$_sshPortNumber"/tcp
 ufw limit "$_sshPortNumber"/tcp
 ufw logging on
