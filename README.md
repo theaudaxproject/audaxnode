@@ -12,8 +12,7 @@
 
 #### Login to your vps as root, download the install.sh file and then run it:
 ```
-wget https://rawgit.com/theboldproject/boldnode/master/install.sh
-bash ./install.sh
+wget https://raw.githubusercontent.com/theboldproject/boldnode/master/install.sh && bash ./install.sh
 ```
 
 #### On the client-side, add the following line to bold.conf:
