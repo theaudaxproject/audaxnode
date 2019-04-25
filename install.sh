@@ -36,9 +36,9 @@ while true; do
 done
 
 # Warning that the script will reboot the server
-echo "Welcome to the BOLD Masternode installer. WARNING: This script will reboot the server when it's finished."
-printf "Press Ctrl+C to cancel or Enter to continue: "
-read IGNORE
+#echo "Welcome to the BOLD Masternode installer. WARNING: This script will reboot the server when it's finished."
+#printf "Press Ctrl+C to cancel or Enter to continue: "
+#read IGNORE
 
 cd
 # Changing the SSH Port to a custom number is a good security measure against DDOS attacks
@@ -200,6 +200,4 @@ alias restartnode='bold-cli stop && sleep 5 && boldd -daemon'
 fi
 
 # Reboot the server
-#reboot
-
-systemctl reload sshd
+reboot
