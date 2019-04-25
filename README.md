@@ -1,7 +1,7 @@
 # Bold Masternode
 ### Bash installer for Bold Masternode on Ubuntu 16.04 LTS x64
 
-#### This shell script comes with 3 cronjobs: 
+#### This shell script comes with 3 maintenance cronjobs: 
 1. Make sure the daemon is always running: `makerun.sh`
 2. Make sure the daemon is never stuck: `checkdaemon.sh`
 4. Clear the log file every other day: `clearlog.sh`
