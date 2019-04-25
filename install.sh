@@ -36,7 +36,7 @@ while true; do
 done
 
 # Warning that the script will reboot the server
-echo "Welcome to the BOLD Masternode installer.\nWARNING: This script will reboot the server when it's finished."
+echo "Welcome to the BOLD Masternode installer. WARNING: This script will reboot the server when it's finished."
 printf "Press Ctrl+C to cancel or Enter to continue: "
 read IGNORE
 
