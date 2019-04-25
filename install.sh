@@ -66,7 +66,7 @@ _p2pport=':18200'
 if free | awk '/^Swap:/ {exit !$2}'; then
     echo ""
 else
-    fallocate -l 2G /swapfile && chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile && cp /etc/fstab /etc/fstab.bak && echo '/swapfile none swap sw 0 0' | tee -a /etc/fstab
+    fallocate -l 4G /swapfile && chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile && cp /etc/fstab /etc/fstab.bak && echo '/swapfile none swap sw 0 0' | tee -a /etc/fstab
 fi
 
 # Make a new directory for bold daemon
@@ -163,5 +163,43 @@ ufw default deny incoming
 ufw default allow outgoing
 ufw --force enable
 
+# Create aliases for commonly use bold-cli commands to ~/.bash_alises
+if [ -e ~/.bash_aliases ]
+then
+    if grep -q "getinfo" ~/.bash_aliases
+        then
+        echo "Aliases already exist, will not add..."
+    else
+	echo "Adding aliases for common bold-cli commands to ~/.bash_aliases"
+        echo "
+alias getinfo='bold-cli getinfo'
+alias nodestatus='bold-cli getmasternodestatus'
+alias syncstatus='bold-cli mnsync status'
+alias restartnode='bold-cli stop && sleep 5 && boldd -daemon'
+        " > ~/.bash_aliases
+        echo "     getinfo for 'bold-cli getinfo'"
+        echo "     nodestatus for 'bold-cli getmasternodestatus'"
+        echo "     syncstatus for 'bold-cli mnsync status'"
+        echo "     restartnode for 'bold-cli stop && sleep 5 && boldd -daemon'"
+        echo "     Please log out/in for these changes to take effect"
+    fi
+
+else
+    echo "Adding aliases for common bold-cli commands to ~/.bash_aliases"
+    echo "
+alias getinfo='bold-cli getinfo'
+alias nodestatus='bold-cli getmasternodestatus'
+alias syncstatus='bold-cli mnsync status'
+alias restartnode='bold-cli stop && sleep 5 && boldd -daemon'
+    " > ~/.bash_aliases
+    echo "     getinfo for 'bold-cli getinfo'"
+    echo "     nodestatus for 'bold-cli getmasternodestatus'"
+    echo "     syncstatus for 'bold-cli mnsync status'"
+    echo "     restartnode for 'bold-cli stop && sleep 5 && boldd -daemon'"
+    echo "     Please log out/in for these changes to take effect"
+fi
+
 # Reboot the server
-reboot
+#reboot
+
+systemctl reload sshd
