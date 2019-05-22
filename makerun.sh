@@ -1,13 +1,13 @@
 #!/bin/bash
 # makerun.sh
-# Make sure boldd is always running.
+# Make sure audaxd is always running.
 # Add the following to the crontab (i.e. crontab -e)
-# */5 * * * * ~/boldnode/makerun.sh
+# */5 * * * * ~/audaxnode/makerun.sh
 
-if ps -A | grep boldd > /dev/null
+if ps -A | grep audaxd > /dev/null
 then
   exit
 else
- cd ~/bold/src;
- ./boldd -daemon &
+ cd ~/audax/src;
+ ./audaxd -daemon &
 fi

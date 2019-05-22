@@ -2,16 +2,16 @@
 # checkdaemon.sh
 # Make sure the daemon is not stuck.
 # Add the following to the crontab (i.e. crontab -e)
-# */30 * * * * ~/boldnode/checkdaemon.sh
+# */30 * * * * ~/audaxnode/checkdaemon.sh
 
-previousBlock=$(cat ~/boldnode/blockcount)
-currentBlock=$(bold-cli getblockcount)
+previousBlock=$(cat ~/audaxnode/blockcount)
+currentBlock=$(audax-cli getblockcount)
 
-bold-cli getblockcount > ~/boldnode/blockcount
+audax-cli getblockcount > ~/audaxnode/blockcount
 
 if [ "$previousBlock" == "$currentBlock" ]; then
-  cd ~/bold/src;
-  ./bold-cli stop;
+  cd ~/audax/src;
+  ./audax-cli stop;
   sleep 10;
-  ./boldd -daemon;
+  ./audaxd -daemon;
 fi
