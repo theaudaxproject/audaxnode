@@ -21,9 +21,17 @@ masternode_alias vps-ip:18200 genkey collateral-txhash outputidx
 ```
 
 #### Launch the Audax QT wallet
-#### Go to Masternodes tab
-#### Choose your node and click the "start alias" button
-#### or
-#### From the debug console in your qt wallet, type ```startmasternode alias false mn-alias``` (where mn-alias is the alias or name of your masternode).
+1. Go to Masternodes tab
+2. Choose your node and click the "start alias" button
+#### OR
+1. From the debug console in your qt wallet
+2. Type ```startmasternode alias false mn-alias``` (where mn-alias is the alias or name of your masternode).
 
 #### Your masternode should be setup now!
+
+#### Usage Tips
+Check Masternode status: ```nodestatus```
+Check Masternode Sync status: ```syncstatus```
+Check current block height, wallet version: ```getinfo```
+Restart Masternode: ```restartnode```
+
