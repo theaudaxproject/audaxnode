@@ -34,8 +34,8 @@ Check Masternode status: ```nodestatus```
 Check Masternode Sync status: ```syncstatus```
 Check current block height, wallet version: ```getinfo```
 Restart Masternode: ```restartnode```
-1. Make sure the daemon is always running: `makerun.sh`
-2. Make sure the daemon is never stuck: `checkdaemon.sh`
-3. Clear the log file every other day: `clearlog.sh`
+Check Masternode status: ```nodestatus```
+Check Masternode Sync status: ```syncstatus```
+Check current block height, wallet version: ```getinfo```
 
 
