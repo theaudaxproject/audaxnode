@@ -28,8 +28,6 @@ masternode_alias vps-ip:18200 genkey collateral-txhash outputidx
 2. Type ```startmasternode alias false mn-alias``` (where mn-alias is the alias or name of your masternode).
 
 #### Your masternode should be setup now!
-test
-test
 
 #### Usage Tips
 
