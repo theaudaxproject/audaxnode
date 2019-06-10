@@ -35,3 +35,4 @@ Check Masternode Sync status: ```syncstatus```
 Check current block height, wallet version: ```getinfo```
 Restart Masternode: ```restartnode```
 
+
