@@ -31,6 +31,7 @@ masternode_alias vps-ip:18200 genkey collateral-txhash outputidx
 
 #### Usage Tips
 ```nodestatus``` # Check Masternode status
+```test```
 Check Masternode Sync status: ```syncstatus```
 Check current block height, wallet version: ```getinfo```
 Restart Masternode: ```restartnode```
