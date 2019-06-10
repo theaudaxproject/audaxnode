@@ -32,9 +32,9 @@ test
 test
 
 #### Usage Tips
-```nodestatus``` # Check Masternode status
+```nodestatus``` # Check Masternode status  
 ```test```
-Check Masternode Sync status: ```syncstatus```
+Check Masternode Sync status: ```syncstatus```  
 Check current block height, wallet version: ```getinfo```
 Restart Masternode: ```restartnode```
 Check Masternode status: ```nodestatus```
