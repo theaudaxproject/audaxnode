@@ -20,6 +20,10 @@ wget https://raw.githubusercontent.com/theaudaxproject/audaxnode/master/install.
 masternode_alias vps-ip:18200 genkey collateral-txhash outputidx
 ```
 
-#### Run the qt wallet, go to Masternodes tab, choose your node and click the "start alias" button, or from the debug console in your qt wallet, type "startmasternode alias false mn-alias" (without the quotes, where mn-alias is the alias or name of your masternoded).
+#### Launch the Audax QT wallet
+#### Go to Masternodes tab
+#### Choose your node and click the "start alias" button
+#### or
+#### From the debug console in your qt wallet, type ```startmasternode alias false mn-alias``` (where mn-alias is the alias or name of your masternode).
 
 #### Your masternode should be setup now!
