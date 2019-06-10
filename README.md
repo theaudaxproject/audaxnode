@@ -30,7 +30,7 @@ masternode_alias vps-ip:18200 genkey collateral-txhash outputidx
 #### Your masternode should be setup now!
 
 #### Usage Tips
-Check Masternode status: ```nodestatus```
+```nodestatus``` # Check Masternode status
 Check Masternode Sync status: ```syncstatus```
 Check current block height, wallet version: ```getinfo```
 Restart Masternode: ```restartnode```
