@@ -124,14 +124,9 @@ wget https://raw.githubusercontent.com/theaudaxproject/audaxnode/master/makerun.
 wget https://raw.githubusercontent.com/theaudaxproject/audaxnode/master/checkdaemon.sh
 wget https://raw.githubusercontent.com/theaudaxproject/audaxnode/master/clearlog.sh
 
-# Create a cronjob for making sure audaxd runs after reboot
-if ! crontab -l | grep -q "reboot audaxd"; then
-  (crontab -l ; echo "@reboot sleep 15 && ~/audax/audaxd -daemon") | crontab -
-fi
-
 # Create a cronjob for making sure audaxd is always running
 if ! crontab -l | grep "~/audaxnode/makerun.sh"; then
-  (crontab -l ; echo "*/5 * * * * ~/audaxnode/makerun.sh") | crontab -
+  (crontab -l ; echo "*/2 * * * * ~/audaxnode/makerun.sh") | crontab -
 fi
 
 # Create a cronjob for making sure the daemon is never stuck
@@ -142,6 +137,11 @@ fi
 # Create a cronjob for clearing the log file
 if ! crontab -l | grep "~/audaxnode/clearlog.sh"; then
   (crontab -l ; echo "0 0 */2 * * ~/audaxnode/clearlog.sh") | crontab -
+fi
+
+# Create a cronjob for making sure audaxd runs after reboot
+if ! crontab -l | grep -q "reboot audaxd"; then
+  (crontab -l ; echo "@reboot sleep 15 && ~/audax/audaxd -daemon") | crontab -
 fi
 
 # Give execute permission to the cron scripts
