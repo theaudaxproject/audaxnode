@@ -141,7 +141,7 @@ fi
 
 # Create a cronjob for making sure audaxd runs after reboot
 if ! crontab -l | grep -q "reboot audaxd"; then
-  (crontab -l ; echo "@reboot sleep 15 && ~/audax/audaxd -daemon") | crontab -
+  (crontab -l ; echo "@reboot sleep 12 && ~/audax/audaxd -daemon") | crontab -
 fi
 
 # Give execute permission to the cron scripts
