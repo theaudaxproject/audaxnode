@@ -126,7 +126,7 @@ wget https://raw.githubusercontent.com/theaudaxproject/audaxnode/master/clearlog
 
 # Create a cronjob for making sure audaxd runs after reboot
 if ! crontab -l | grep -q "reboot audaxd"; then
-  (crontab -l ; echo "@reboot sleep 15 && ~/audax/audaxd -daemon -txindex") | crontab -
+  (crontab -l ; echo "@reboot sleep 15 && ~/audax/audaxd -daemon") | crontab -
 fi
 
 # Create a cronjob for making sure audaxd is always running
