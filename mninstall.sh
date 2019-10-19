@@ -11,7 +11,7 @@ installAudax () {
     cd
     mkdir -p /home/$curruser/.audax
     
-    cat > sudo "/home/$curruser/.audax/audax.conf" << EOL
+    cat > sudo /home/audaxadmin/.audax/audax.conf << EOL
     rpcuser=$rpcuser
     rpcpassword=$rpcpassword
     daemon=1
@@ -27,7 +27,7 @@ installAudax () {
     masternodeprivkey=${_nodePrivateKey}
     EOL
 	
-    sudo cat > sudo "/etc/systemd/system/audaxd.service" << EOL
+    sudo cat > sudo /etc/systemd/system/audaxd.service << EOL
     [Unit]
     Description=audaxd
     After=network.target
