@@ -11,8 +11,7 @@ installAudax () {
     cd
     mkdir -p /home/$curruser/.audax
     
-    cat > sudo /home/$curruser/.audax/audax.conf << EOL
-    rpcuser=$rpcuser
+    sudo sh -c 'echo "rpcuser=$rpcuser
     rpcpassword=$rpcpassword
     daemon=1
     rpcallowip=127.0.0.1
@@ -25,22 +24,21 @@ installAudax () {
     bind=${_nodeIpAddress}
     masternodeaddr=${_nodeIpAddress}${_p2pport}
     masternodeprivkey=${_nodePrivateKey}
-EOL
+    " > /home/$curruser/.audax/audax.conf'
 	
-    sudo cat > sudo /etc/systemd/system/audaxd.service << EOL
-    [Unit]
-    Description=audaxd
-    After=network.target
-    [Service]
-    Type=forking
-    User=$curruser
-    WorkingDirectory=/home/$curruser
-    ExecStart=/home/$curruser/audax/bin/audaxd -datadir=/home/$curruser/.audax
-    ExecStop=/home/$curruser/audax/bin/audax-cli -datadir=/home/$curruser/.audax stop
-    Restart=on-abort
-    [Install]
-    WantedBy=multi-user.target
-EOL
+   sudo sh -c 'echo "[Unit]
+   Description=audaxd
+   After=network.target
+   [Service]
+   Type=forking
+   User=$curruser
+   WorkingDirectory=/home/$curruser
+   ExecStart=/home/$curruser/audax/bin/audaxd -datadir=/home/$curruser/.audax
+   ExecStop=/home/$curruser/audax/bin/audax-cli -datadir=/home/$curruser/.audax stop
+   Restart=on-abort
+   [Install]
+   WantedBy=multi-user.target
+   " > /etc/systemd/system/audaxd.service'
 	
    sudo systemctl start audaxd
    sudo systemctl enable audaxd
