@@ -11,7 +11,7 @@ installAudax () {
     cd
     mkdir -p /home/$curruser/.audax
     
-    cat > sudo /home/audaxadmin/.audax/audax.conf << EOL
+    cat > sudo /home/$curruser/.audax/audax.conf << EOL
     rpcuser=$rpcuser
     rpcpassword=$rpcpassword
     daemon=1
@@ -25,7 +25,7 @@ installAudax () {
     bind=${_nodeIpAddress}
     masternodeaddr=${_nodeIpAddress}${_p2pport}
     masternodeprivkey=${_nodePrivateKey}
-    EOL
+EOL
 	
     sudo cat > sudo /etc/systemd/system/audaxd.service << EOL
     [Unit]
@@ -40,7 +40,7 @@ installAudax () {
     Restart=on-abort
     [Install]
     WantedBy=multi-user.target
-    EOL
+EOL
 	
    sudo systemctl start audaxd
    sudo systemctl enable audaxd
