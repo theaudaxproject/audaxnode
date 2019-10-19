@@ -70,25 +70,18 @@ while true; do
    if [ ${REPLY} == "Y" ]; then
       pID=$(pidof audaxd)
       if [ ${pID} ]; then
-          kill ${pID}      
-          rm -rf ~/.audax/
-          if [ -d ~/audax ]; then
-              rm -rf ~/audax/
-          else
-              echo ""
-          fi    
-          break
-      else
-          echo "No instance of audax running"
-      fi  
+          kill ${pID}
+      fi
+      rm -rf ~/.audax/
+      if [ -d ~/audax ]; then
+          rm -rf ~/audax         
+      fi
+   fi
    else
       if [ ${REPLY} == "n" ]; then
         exit
       fi
-   fi
- else
-   break
- fi
+   fi 
 done
 
 printf "Audax Masternode GenKey: "
