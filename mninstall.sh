@@ -80,7 +80,6 @@ while true; do
           break
       else
           echo "No instance of audax running"
-	  break
       fi  
    else
       if [ ${REPLY} == "n" ]; then
