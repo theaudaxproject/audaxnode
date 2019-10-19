@@ -88,7 +88,7 @@ while true; do
    fi
  else
    break
- fi
+ fi 
 done
 
 printf "Audax Masternode GenKey: "
