@@ -76,6 +76,7 @@ while true; do
       if [ -d ~/audax ]; then
           rm -rf ~/audax         
       fi
+      exit
    fi
    else
       if [ ${REPLY} == "n" ]; then
