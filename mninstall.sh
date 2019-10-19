@@ -38,11 +38,8 @@ installAudax () {
    Restart=on-abort
    [Install]
    WantedBy=multi-user.target
-   ' > /etc/systemd/system/audaxd.service"
-	
-   sudo systemctl start audaxd
-   sudo systemctl enable audaxd
-   echo "Masternode install complete"
+   ' > /etc/systemd/system/audaxd.service"	
+   
 }
 
 
@@ -104,3 +101,6 @@ sleep 5s
 clear
 
 installAudax
+sudo systemctl start audaxd
+sudo systemctl enable audaxd
+echo "Masternode install complete"
