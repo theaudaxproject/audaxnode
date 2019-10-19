@@ -103,4 +103,5 @@ clear
 installAudax
 sudo systemctl start audaxd
 sudo systemctl enable audaxd
+systemctl daemon-reload
 echo "Masternode install complete"
