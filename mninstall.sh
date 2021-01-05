@@ -199,7 +199,8 @@ audaxlink=`curl -s https://api.github.com/repos/theaudaxproject/audax/releases/l
 curruser=$(whoami)
 rpcuser=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 13 ; echo '')
 rpcpassword=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 32 ; echo '')
-_nodeIpAddress=$(ip route get 1 | awk '{print $NF;exit}')
+# _nodeIpAddress=$(ip route get 1 | awk '{print $NF;exit}')
+_nodeIpAddress=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
 _p2pport=':18200'
 sleep 5s
 clear
