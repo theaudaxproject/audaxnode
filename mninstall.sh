@@ -123,6 +123,8 @@ installAudax () {
        alias syncstatus='~/audax/bin/audax-cli mnsync status'
        alias restartnode='~/audax/bin/audax-cli stop && sleep 5 && ~/audax/bin/audaxd -daemon'
        " > ~/.bash_aliases
+       
+       source ~/.bashrc
        echo "     getinfo for '~/audax/bin/audax-cli getinfo'"
        echo "     nodestatus for '~/audax/bin/audax-cli getmasternodestatus'"
        echo "     syncstatus for '~/audax/bin/audax-cli mnsync status'"
