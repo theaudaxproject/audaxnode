@@ -78,18 +78,18 @@ installAudax () {
    
    cd
    # Change the SSH port
-   sed -i "s/[#]\{0,1\}[ ]\{0,1\}Port [0-9]\{2,\}/Port ${_sshPortNumber}/g" /etc/ssh/sshd_config
+   sudo sed -i "s/[#]\{0,1\}[ ]\{0,1\}Port [0-9]\{2,\}/Port ${_sshPortNumber}/g" /etc/ssh/sshd_config
    
    # Firewall security measures
-   apt install ufw -y
-   ufw disable
-   ufw allow 18200
-   ufw allow "$_sshPortNumber"/tcp
-   ufw limit "$_sshPortNumber"/tcp
-   ufw logging on
-   ufw default deny incoming
-   ufw default allow outgoing
-   ufw --force enable
+   sudo apt install ufw -y
+   sudo ufw disable
+   sudo ufw allow 18200
+   sudo ufw allow "$_sshPortNumber"/tcp
+   sudo ufw limit "$_sshPortNumber"/tcp
+   sudo ufw logging on
+   sudo ufw default deny incoming
+   sudo ufw default allow outgoing
+   sudo ufw --force enable
    
    # Create aliases for commonly use audax-cli commands to ~/.bash_alises
    if [ -e ~/.bash_aliases ]
@@ -129,7 +129,7 @@ installAudax () {
    # Reboot the server
    echo "Masternode installation complete. This server will now be rebooted. If you set the SSH Port to something other than the default 22, ensure to configure your SSH client accordingly."
    sleep 4s
-   reboot
+   sudo reboot
 
    
 }
@@ -171,6 +171,7 @@ while true; do
           break
       else
           echo "No instance of audax running"
+	  break
       fi  
    else
       if [ ${REPLY} == "n" ]; then
