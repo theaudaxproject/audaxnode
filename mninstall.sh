@@ -129,16 +129,20 @@ installAudax () {
    fi
    
    # Reboot the server
-   echo "Masternode installation complete. This server will now be rebooted. If you set the SSH Port to something other than the default 22, ensure to configure your SSH client accordingly."
-   sleep 4s
-   sudo reboot
+   
+   
+   if [ ${_sshPortNumber} != 22 ]; then
+       echo "Masternode installation complete. This server will now be rebooted. If you set the SSH Port to something other than the default 22, ensure to configure your SSH client accordingly."
+       sleep 4s
+       sudo reboot
+   fi
 
    
 }
 
 # Setup
 # Warning that the script will reboot the server
-echo "Welcome to the AUDAX Masternode installer. WARNING: This script will reboot the server when it's finished."
+echo "Welcome to the AUDAX Masternode installer. WARNING: This script will reboot the server when it's finished depending on the options you select during installation."
 printf "Press Ctrl+C to cancel or Enter to continue: "
 read IGNORE
 
@@ -187,7 +191,7 @@ done
 
 cd
 # Changing the SSH Port to a custom number is a good security measure against DDOS attacks
-printf "Custom SSH Port(Enter to ignore): "
+printf "Custom SSH Port(Enter to ignore and use default port 22): "
 read VARIABLE
 _sshPortNumber=${VARIABLE:-22}
 
