@@ -40,7 +40,9 @@ installAudax () {
    WantedBy=multi-user.target
    ' > /etc/systemd/system/audaxd.service"
    
+   sudo systemctl start audaxd
    sudo systemctl enable audaxd
+   systemctl daemon-reload
    
    # Create a directory for Audax's's cronjobs
    cd
