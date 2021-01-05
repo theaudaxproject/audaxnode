@@ -8,6 +8,6 @@ if ps -A | grep audaxd > /dev/null
 then
   exit
 else
- cd ~/audax/src;
+ cd /home/$curruser/audax/bin/;
  ./audaxd -daemon &
 fi
